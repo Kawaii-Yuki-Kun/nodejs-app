@@ -1,11 +1,11 @@
 name: CICD
 
-# on:
-#   push:
-#     branches: [deploy-to-ecs]
-
 on:
-  workflow_dispatch:
+  push:
+    branches: [deploy-to-ecs]
+
+# on:
+#   workflow_dispatch:
 
 jobs:
   build-and-deploy:
