@@ -48,7 +48,7 @@ jobs:
       # This step updates the Amazon ECS service to use the newly built and pushed image
       - name: Update the service
         run: |
-          aws ecs update-service --cluster  nodejs-app--cluster  --service nodejs-app-service  --force-new-deployment
+          aws ecs update-service --cluster  nodejs-app-cluster  --service nodejs-app-service  --force-new-deployment
 
       # # This step updates the Amazon ECS service to use the newly built and pushed image
       # - name: Fill in the new image ID in the Amazon ECS task definition
