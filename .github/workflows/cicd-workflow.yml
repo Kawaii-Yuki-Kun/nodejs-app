@@ -1,11 +1,11 @@
 name: CICD
 
-on:
-  push:
-    branches: [deploy-to-ecs]
-
 # on:
-#   workflow_dispatch:
+  # push:
+  #   branches: [deploy-to-ecs]
+
+on:
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -50,20 +50,20 @@ jobs:
         run: |
           aws ecs update-service --cluster  nodejs-app--cluster  --service nodejs-app-service  --force-new-deployment
 
-      # This step updates the Amazon ECS service to use the newly built and pushed image
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: nodejs-app-task-definition.json
-          container-name: nodejs-app-container-1
-          image: ${{ steps.build-image.outputs.image }}
+      # # This step updates the Amazon ECS service to use the newly built and pushed image
+      # - name: Fill in the new image ID in the Amazon ECS task definition
+      #   id: task-def
+      #   uses: aws-actions/amazon-ecs-render-task-definition@v1
+      #   with:
+      #     task-definition: nodejs-app-task-definition.json
+      #     container-name: nodejs-app-container-1
+      #     image: ${{ steps.build-image.outputs.image }}
 
-      # This step deploys your Amazon ECS task definition to the Amazon ECS cluster that is specified in the Amazon ECS service
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: nodejs-app-service
-          cluster: nodejs-cluster
-          wait-for-service-stability: true
+      # # This step deploys your Amazon ECS task definition to the Amazon ECS cluster that is specified in the Amazon ECS service
+      # - name: Deploy Amazon ECS task definition
+      #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      #   with:
+      #     task-definition: ${{ steps.task-def.outputs.task-definition }}
+      #     service: nodejs-app-service
+      #     cluster: nodejs-cluster
+      #     wait-for-service-stability: true
